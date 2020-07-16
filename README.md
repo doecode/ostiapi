@@ -5,6 +5,8 @@ Purpose
 -------
 To facilitate posting data set metadata to OSTI ELINK API to obtain DOIs, via python language interface.
 
+The OSTI data set API is designed for use by US Department of Energy funding recipient researchers and laboratories to obtain DOIs [Digital Object Identifiers](https://doi.org/ "DOI.org home page") for data sets.  Documentation is available for the API at [OSTI's ELINK web site](https://www.osti.gov/elink/241-6api.jsp "241.6 API documentation").
+
 Requirements
 ------------
 The ostiapi.py library module requires publicly available support modules dicttoxml and the requests module.  To install these locally, use your system's pip (or pip3) python installer function.
@@ -107,7 +109,7 @@ Additional information about creators or authors may be provided via an array of
 
 Example:
 ``` python
-    'authors':[{'first_name':'Neal', 'last_name':'Ensor', 'affiliation_name':'DOE OSTI', 'private_email':'ensorn@osti.gov', 'orcid_id':'0000-0001-5166-5705'}]
+    >>> data['authors']=[{'first_name':'Neal', 'last_name':'Ensor', 'affiliation_name':'DOE OSTI', 'private_email':'ensorn@osti.gov', 'orcid_id':'0000-0001-5166-5705'}]
 ```
 
 | key name | description |
