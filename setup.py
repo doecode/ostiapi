@@ -17,7 +17,7 @@ setup(
     long_description_content_type='text/markdown',
     author='Neal Ensor',
     author_email='EnsorN@osti.gov',
-    packages=find_packages(),
+    packages=find_packages(include=['ostiapi']),
     install_requires=[
         'requests',
         'dicttoxml'
