@@ -1,0 +1,5 @@
+[run]
+include = */site-packages/ostiapi/*
+
+[report]
+include = */site-packages/ostiapi/*

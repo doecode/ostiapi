@@ -86,7 +86,7 @@ def reserve(data, username=None, password=None):
     
     data['set_reserved'] = "true"
 
-    return post(data, username, password);
+    return post(data, username, password)
 
 
 def post(data, username=None, password=None):
@@ -128,7 +128,7 @@ def post(data, username=None, password=None):
     records.append(data)
 
     # post XML to ELINK API
-    elink = requests.post(url + '2416api',
+    elink = requests.post(this.url + '2416api',
                           data=datatoxml(records),
                           auth=(username, password))
 
@@ -191,7 +191,7 @@ def get(id, username=None, password=None):
     :param password: the ELINK account password
     :return: a dict containing the record metadata if found
     """
-    elink = requests.get(url + '2416api?osti_id=' + str(id),
+    elink = requests.get(this.url + '2416api?osti_id=' + str(id),
                          auth=(username, password))
 
     if elink.status_code == 200:
