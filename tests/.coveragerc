@@ -1,5 +1,5 @@
 [run]
-include = */site-packages/ostiapi/*
+include = */ostiapi/__init__.py
 
 [report]
-include = */site-packages/ostiapi/*
+include = */ostiapi/__init__.py
