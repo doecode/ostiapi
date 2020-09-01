@@ -123,9 +123,13 @@ def post(data, username=None, password=None):
     UnauthorizedException if no user account information is supplied
     """
 
-    # ELINK POST expects an array of records
+    # ELINK POST expects an array of records IF not already submitting one
     records = []
-    records.append(data)
+
+    if isinstance(data, list):
+       records = data
+    else:
+       records.append(data)
 
     # post XML to ELINK API
     elink = requests.post(this.url + '2416api',
