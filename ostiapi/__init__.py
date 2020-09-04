@@ -186,7 +186,7 @@ def etree_to_dict(t):
     return d
 
 
-def get(id, username=None, password=None):
+def get(id=None, username=None, password=None):
     """
     Acquire a single OSTI record as a python dict.
 
@@ -195,7 +195,11 @@ def get(id, username=None, password=None):
     :param password: the ELINK account password
     :return: a dict containing the record metadata if found
     """
-    elink = requests.get(this.url + '2416api?osti_id=' + str(id),
+    params = {}
+    if id:
+        params = {'osti_id': str(id)}
+    elink = requests.get(this.url + '2416api',
+                         params=params,
                          auth=(username, password))
 
     if elink.status_code == 200:
