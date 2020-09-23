@@ -2,6 +2,7 @@ import requests
 import xml.etree.ElementTree as ET
 import dicttoxml
 from collections import defaultdict
+from urllib.parse import urlencode
 import sys
 
 
@@ -185,22 +186,25 @@ def etree_to_dict(t):
             d[t.tag] = text
     return d
 
-
-def get(id, username=None, password=None):
+def get(params={}, username=None,password=None):
     """
-    Acquire a single OSTI record as a python dict.
+    Retrieve record metadata from OSTI.
+    
+    :param params: optional dict containing query elements
+    :param username: OSTI ELINK user account name
+    :param password: OSTI ELINK user password
 
-    :param id: the OSTI ID to look for
-    :param username: the ELINK account user name
-    :param password: the ELINK account password
-    :return: a dict containing the record metadata if found
+    :return: a dict containing information about the records
+    :raises: ForbiddenException if access is denied, NotFoundException if no records found,
+    or ServerException if there was a service connection error
     """
-    elink = requests.get(this.url + '2416api?osti_id=' + str(id),
-                         auth=(username, password))
+    request_url = this.url + '2416api?' + urlencode(params)
+
+    elink = requests.get(request_url,
+        auth=(username,password))
 
     if elink.status_code == 200:
         xml = ET.fromstring(elink.content)
-
         return etree_to_dict(xml)['records']
     elif elink.status_code == 403:
         raise ForbiddenException('User does not have access to this record.')

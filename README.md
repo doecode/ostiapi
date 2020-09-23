@@ -29,8 +29,28 @@ Accessible functions:
   Send required metadata to OSTI in order to obtain a live published DOI for completed data sets, or update URL or other metadata information.
   An OSTI ID value or accession number (unique identifier provided by the client) is required in order to update existing records, and will be
   generated upon successful post or reserve call.
-* *get(osti_id, username, password)*
-  Obtain metadata from OSTI for existing data set record by its OSTI ID value.
+* *get(parameters, username, password)*
+  Obtain metadata from OSTI for existing data sets.  If parameters (dict) is empty, all records
+  will be returned.  Supported parameter key values below, which may be combined
+  as desired. Note the returned object should contain elements '**@start**', '**@rows**', and '**@numfound**' indicating starting row index, number of rows
+  in request set, and total number found respectively.
+
+  | key | description |
+  | -- | -- |
+  | start | starting row index, from 0 (defaults to 0) |
+  | rows | number of desired rows per request (defaults to 25) |
+  | osti_id | query a single record by its OSTI ID |
+  | status | One of "complete", "saved", or "pending"; by OSTI record status |
+  | title | search text of titles |
+  | author | search authors of records |
+  | publication_date_from | find records published on or after indicated date (MM/DD/YYYY) |
+  | publication_date_to | find records published on or before indicated date (MM/DD/YYYY) |
+  | submit_date_from | find records submitted on or after indicated date (MM/DD/YYYY) |
+  | submit_date_to | find records submitted on or before indicated date (MM/DD/YYYY) |
+  | accession_num | find records by unique site-specific ID value |
+  | status | find records by status: one of 'complete', 'saved', or 'pending' |
+  | doi | find records by DOI value |
+  | site_input_code | restrict records to a particular ELINK site code value |
 
 Examples below are from the python3 interpreter, and have been tested on version 3.6.8 python.
 
@@ -55,6 +75,12 @@ Examples below are from the python3 interpreter, and have been tested on version
     Ensure the value of data['record']['status'] is 'SUCCESS' to indicate the record was accepted and stored properly;
     if not, the data['record']['status_message'] value should detail any errors or metadata validation issues.
     """
+
+    """
+    Retrieve first set of all records from OSTI.
+    """
+    >>> ostiapi.get({}, 'my-osti-account', 'my-osti-password')
+    {'record':[{'osti_id':'11509999', ... }], '@start':0, '@rows':1, '@numfound':1}
 ```
 
 Reserved DOI values are not minted with DataCite, but intended as placeholders until such time as the data set is ready for publication.  Once this is the case, you may update the existing DOI reservation record by "osti_id" or "accession_num" value via the ostiapi.post() method, providing additional required metadata fields in order to complete the submission.  Upon receiving a SUCCESS on the post() operation, the DOI should be minted an live with DataCite within 24 to 48 hours.
