@@ -1,4 +1,4 @@
-certifi==2021.5.30
+certifi==2023.7.22
 charset-normalizer==2.0.6
 dicttoxml==1.7.8
 idna==3.2
